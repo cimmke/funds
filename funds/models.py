@@ -31,7 +31,25 @@ def get_year():
 
 
 class AccountTypes(models.Model):
-    account_type = models.CharField(max_length=50, unique=True)
+    CHECKING = 'checking'
+    SAVINGS = 'savings'
+    CASH = 'cash'
+    CREDIT_CARD = 'credit_card'
+    LINE_OF_CREDIT = 'line_of_credit'
+    INVESTMENT = 'investment'
+    OTHER_LIABILITY = 'other_liability'
+    OTHER_ASSET = 'other_asset'
+    ACCT_TYPES = [
+        (CHECKING, 'Checking'),
+        (SAVINGS, 'Savings'),
+        (CASH, 'Cash'),
+        (CREDIT_CARD, 'Credit Card'),
+        (LINE_OF_CREDIT, 'Line of Credit'),
+        (INVESTMENT, 'Investment'),
+        (OTHER_LIABILITY, 'Other Liability or Loan'),
+        (OTHER_ASSET, 'Other Asset'),
+    ]
+    account_type = models.CharField(max_length=30, unique=True, choices=ACCT_TYPES)
 
     def __str__(self):
         return self.account_type
@@ -47,7 +65,15 @@ class Accounts(models.Model):
 
 
 class PostingTypes(models.Model):
-    posting_types = models.CharField(max_length=50, unique=True)
+    STANDARD = 'standard'
+    INCOME = 'income'
+    TRANSFER = 'transfer'
+    POST_TYPES = [
+        (STANDARD, 'Standard'),
+        (INCOME, 'Income'),
+        (TRANSFER, 'Transfer'),
+    ]
+    posting_types = models.CharField(max_length=50, unique=True, choices=POST_TYPES)
 
     def __str__(self):
         return self.posting_types

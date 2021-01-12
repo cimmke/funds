@@ -30,7 +30,7 @@ def get_year():
         return today.year
 
 
-class AccountTypes(models.Model):
+class Accounts(models.Model):
     CHECKING = 'checking'
     SAVINGS = 'savings'
     CASH = 'cash'
@@ -49,34 +49,12 @@ class AccountTypes(models.Model):
         (OTHER_LIABILITY, 'Other Liability or Loan'),
         (OTHER_ASSET, 'Other Asset'),
     ]
-    account_type = models.CharField(max_length=30, unique=True, choices=ACCT_TYPES)
-
-    def __str__(self):
-        return self.account_type
-
-
-class Accounts(models.Model):
     account_name = models.CharField(max_length=50, unique=True)
     created_date = models.DateField(auto_now_add=True)
-    account_type = models.ForeignKey(AccountTypes, on_delete=models.PROTECT)
+    account_type = models.CharField(max_length=30, choices=ACCT_TYPES, default=CASH)
 
     def __str__(self):
         return self.account_name
-
-
-class PostingTypes(models.Model):
-    STANDARD = 'standard'
-    INCOME = 'income'
-    TRANSFER = 'transfer'
-    POST_TYPES = [
-        (STANDARD, 'Standard'),
-        (INCOME, 'Income'),
-        (TRANSFER, 'Transfer'),
-    ]
-    posting_types = models.CharField(max_length=50, unique=True, choices=POST_TYPES)
-
-    def __str__(self):
-        return self.posting_types
 
 
 class Categories(models.Model):
@@ -88,9 +66,21 @@ class Categories(models.Model):
 
 
 class Postings(models.Model):
+    STANDARD = 'standard'
+    INCOME = 'income'
+    TRANSFER = 'transfer'
+    POST_TYPES = [
+        (STANDARD, 'Standard'),
+        (INCOME, 'Income'),
+        (TRANSFER, 'Transfer'),
+    ]
     posting_num = models.PositiveIntegerField(primary_key=True)
     date = models.DateField(default=datetime.date.today)
-    posting_type = models.ForeignKey(PostingTypes, on_delete=models.PROTECT)
+    posting_types = models.CharField(
+        max_length=30,
+        choices=POST_TYPES,
+        default=STANDARD
+    )
     payee = models.CharField(max_length=50, blank=True)
     cleared = models.BooleanField(default=False)
     note = models.TextField(blank=True)

@@ -90,7 +90,11 @@ class Postings(models.Model):
 
 
 class Transactions(models.Model):
-    posting_num = models.ForeignKey(Postings, on_delete=models.PROTECT)
+    posting_num = models.ForeignKey(
+        Postings,
+        related_name='transactions',
+        on_delete=models.PROTECT
+    )
     account_id = models.ForeignKey(Accounts, on_delete=models.PROTECT)
     categories_id = models.ForeignKey(Categories, on_delete=models.PROTECT)
     amount = models.DecimalField(max_digits=19, decimal_places=4)

@@ -76,7 +76,7 @@ class Postings(models.Model):
     ]
     posting_num = models.PositiveIntegerField(primary_key=True)
     date = models.DateField(default=datetime.date.today)
-    posting_types = models.CharField(
+    posting_type = models.CharField(
         max_length=30,
         choices=POST_TYPES,
         default=STANDARD

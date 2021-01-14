@@ -12,5 +12,5 @@ router.register(r'budgets', views.BudgetsViewset)
 
 # The API URLs are now determined automatically by the router.
 urlpatterns = [
-    path('', include(router.urls)),
+    path('api/v1/', include(router.urls)),
 ]
